@@ -20,17 +20,43 @@ fig.update_xaxes(range=[dt.date(1936,1,1), dt.date(1940,1,1)], type="date")
 fig.update_yaxes(range=[0, 4])
 
 focus_colors= {
-    "politics": ("RoyalBlue", "LightSkyBlue")
+    "politics": ("Gray", "Silver"),
+    "economy": ("DarkOrange", "Orange"),
+    "marine": ("RoyalBlue", "LightSkyBlue"),
+    "military": ("DarkOliveGreen", "Olive")
 }
 
 
 source = [
-    dict(Resource="POL_focus",  Task="The Castle",                      Duration=35,    Type="politics"),
-    dict(Resource="POL_focus",  Task="Dissolve the Sejm",               Duration=35,    Type="politics"),
-    dict(Resource="POL_focus",  Task="Maintain the Dictatorship",       Duration=35,    Type="politics"),
+    dict(Resource="POL_focus",  Task="Complete the April Constitution",        Duration=35,    Type="politics"),
+    dict(Resource="POL_focus",  Task="The Four Year Plan",                     Duration=35,    Type="economy"),
+    dict(Resource="POL_focus",  Task="Central Region Strategy",                Duration=35,    Type="economy"),
+    dict(Resource="POL_focus",  Task="The New Polish Industry",                Duration=35,    Type="economy"),
+    dict(Resource="POL_focus",  Task="Fill the Railway Gaps",                  Duration=35,    Type="economy"),
+    dict(Resource="POL_focus",  Task="Polish Militarism",                      Duration=35,    Type="politics"),
+    dict(Resource="POL_focus",  Task="Consolidate the Sanation Government",    Duration=35,    Type="politics"),
+    dict(Resource="POL_focus",  Task="Agrarian Reform",                        Duration=35,    Type="economy"),
+    dict(Resource="POL_focus",  Task="The Castle",                             Duration=35,    Type="politics"),
+    dict(Resource="POL_focus",  Task="Central Defence of Poland",              Duration=35,    Type="economy"),
+    dict(Resource="POL_focus",  Task="The Sanation Right",                     Duration=35,    Type="politics"),
+    dict(Resource="POL_focus",  Task="Eliminate the Socialist Parties",        Duration=35,    Type="politics"),
+    dict(Resource="POL_focus",  Task="Develop Upper Silesia",                  Duration=35,    Type="economy"),
+    dict(Resource="POL_focus",  Task="Polish School of Mathematics",           Duration=35,    Type="economy"),
+    dict(Resource="POL_focus",  Task="Dissolve the Sejm",                      Duration=35,    Type="politics"),
+    dict(Resource="POL_focus",  Task="Support Right Wing Paramilitarism",      Duration=35,    Type="politics"),
+    dict(Resource="POL_focus",  Task="Department of Home Defence",             Duration=35,    Type="politics"),
+    dict(Resource="POL_focus",  Task="Develop Polish Shipbuilding",            Duration=35,    Type="marine"),
+    dict(Resource="POL_focus",  Task="Attract Poles to Gdynia",                Duration=35,    Type="marine"),
+    dict(Resource="POL_focus",  Task="Study British Ship Designs",             Duration=35,    Type="marine"),
+    dict(Resource="POL_focus",  Task="Expand the Gdynia Seaport",              Duration=35,    Type="marine"),
+    dict(Resource="POL_focus",  Task="Second Man of the State",                Duration=35,    Type="politics"),
+    dict(Resource="POL_focus",  Task="Invest in the Old Polish Region",        Duration=35,    Type="economy"),
+    dict(Resource="POL_focus",  Task="Modernise the Congressional Factories",  Duration=35,    Type="economy"),
+    dict(Resource="POL_focus",  Task="Warsaw Main Railway Station",            Duration=35,    Type="economy"),
+    dict(Resource="POL_focus",  Task="Invest in Eastern Poland",               Duration=35,    Type="economy"),
+    dict(Resource="POL_focus",  Task="National Defense Fund",                  Duration=35,    Type="economy"),
     dict(Resource="real",       Task="Powołanie rządu Składkowskiego",  Date='1936-05-16', Parent=["The Castle"]),
     dict(Resource="real",       Task="Wybory 1938",                     Date='1938-11-06', Parent=["Dissolve the Sejm"]), 
-    dict(Resource="real",       Task="Nieprzyjęta dymisja rządu",       Date='1937-06-24', Parent=["Maintain the Dictatorship"]), 
 ]
 
 previous_finish = dt.date(1936,1,1)
@@ -53,13 +79,23 @@ for shape in source:
                       x0=shape["Start"].isoformat(),
                       y0=2,
                       x1=shape["Finish"].isoformat(),
-                      y1=3,
+                      y1=4,
                       line=dict(
-                          color=focus_colors["politics"][0],
+                          color=focus_colors[shape["Type"]][0],
                           width=3,
                           ),
-                      fillcolor=focus_colors["politics"][1],
+                      fillcolor=focus_colors[shape["Type"]][1],
                       )
+        fig.add_annotation(
+            x=(shape["Start"] + (shape["Finish"]-shape["Start"])/2).isoformat(),
+            y=3,
+            text=shape["Task"],
+            showarrow=False,
+            arrowhead=1,
+            yshift=0,
+            textangle=-90,
+            align="left"
+            )
 
 for shape in source:
     if shape["Resource"] == "real":
