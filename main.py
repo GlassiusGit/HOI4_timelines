@@ -17,7 +17,7 @@ fig.add_trace(go.Scatter(
 
 # Set axes properties
 fig.update_xaxes(range=[dt.date(1936,1,1), dt.date(1940,1,1)], type="date")
-fig.update_yaxes(range=[0, 4])
+fig.update_yaxes(range=[-1, 4.5])
 
 focus_colors= {
     "politics": ("Gray", "Silver"),
@@ -79,7 +79,7 @@ for shape in source:
                       x0=shape["Start"].isoformat(),
                       y0=2,
                       x1=shape["Finish"].isoformat(),
-                      y1=4,
+                      y1=4.5,
                       line=dict(
                           color=focus_colors[shape["Type"]][0],
                           width=3,
@@ -116,6 +116,15 @@ for shape in source:
                               width=4
                               )
                           )
+            
+            fig.add_annotation(
+            x=end_point,
+            y=1,
+            text=shape["Task"],
+            showarrow=False,
+            textangle=-90,
+            yanchor="top",
+            )
 
         
         
