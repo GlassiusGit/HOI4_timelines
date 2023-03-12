@@ -88,13 +88,13 @@ for shape in source:
                       )
         fig.add_annotation(
             x=(shape["Start"] + (shape["Finish"]-shape["Start"])/2).isoformat(),
-            y=3,
+            y=2,
             text=shape["Task"],
             showarrow=False,
             arrowhead=1,
             yshift=0,
             textangle=-90,
-            align="left"
+            yanchor="bottom",
             )
 
 for shape in source:
