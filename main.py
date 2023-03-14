@@ -55,8 +55,15 @@ source = [
     dict(Resource="POL_focus",  Task="Warsaw Main Railway Station",            Duration=70,    Type="economy"),
     dict(Resource="POL_focus",  Task="Invest in Eastern Poland",               Duration=70,    Type="economy"),
     dict(Resource="POL_focus",  Task="National Defense Fund",                  Duration=70,    Type="economy"),
-    dict(Resource="real",       Task="Powołanie rządu Składkowskiego",  Date='1936-05-16', Parent=["The Castle"]),
-    dict(Resource="real",       Task="Wybory 1938",                     Date='1938-11-06', Parent=["Dissolve the Sejm"]), 
+    dict(Resource="real",       Task="April Constitution",                      Date='1935-04-23', Parent=["Complete the April Constitution"]),
+    dict(Resource="real",       Task="Four Year Plan ",                         Date='1936-07-01', Parent=["The Four Year Plan"]),
+    dict(Resource="real",       Task="Kwiatkowski's speech",                    Date='1937-07-05', Parent=["Central Region Strategy"]),
+    dict(Resource="real",       Task="Składkowski's government",                Date='1936-05-16', Parent=["Consolidate the Sanation Government"]),
+    dict(Resource="real",       Task="Marshal of Poland",                       Date='1936-11-10', Parent=["The Sanation Right"]),
+    dict(Resource="real",       Task="A note to ministers and voivodes",        Date='1936-07-13', Parent=["Second Man of the State"]),
+    dict(Resource="real",       Task="Mościcki denies Składkowskis resignation",Date='1937-06-23', Parent=["The Castle"]),
+    dict(Resource="real",       Task="Mobilization plan W",                     Date='1938-05-01', Parent=["Polish Militarism"]),
+    dict(Resource="real",       Task="Election 1938",                           Date='1938-11-06', Parent=["Dissolve the Sejm"]), 
 ]
 
 previous_finish = dt.date(1936,1,1)
