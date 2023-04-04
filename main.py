@@ -17,10 +17,17 @@ def populate_dates(starting_date, df):
         current_date += delta
         df.at[index, "End"] = current_date
 
+orig_x0=0
+orig_x1=1
+real_x0=2
 
 fig = go.Figure()
-fig.update_xaxes(range=[dt.date(1936,1,1), dt.date(1940,1,1)], type="date")
-fig.update_yaxes(range=[-1, 4.5])
+fig.update_xaxes(range=[-1, 3.5])
+fig.update_yaxes(
+                 range=[dt.date(1940,1,1), dt.date(1936,1,1)],
+                 type="date",
+                 #autorange="reversed"
+    )
 
 
 focus_colors= {
@@ -29,7 +36,6 @@ focus_colors= {
     "marine": ("RoyalBlue", "LightSkyBlue"),
     "military": ("DarkOliveGreen", "Olive")
 }
-
 
 # NSB data
 NSB = pd.read_csv(r"C:\Users\Patryk\Desktop\Nowy folder\NSB_original.csv", encoding="utf-8")
@@ -42,10 +48,10 @@ for index, focus in NSB.iterrows():
     fig.add_shape(type="rect",
                   xref="x",
                   yref="y",
-                  x0=start,
-                  y0=2,
-                  x1=end,
-                  y1=4.5,
+                  x0=orig_x0,
+                  y0=start,
+                  x1=orig_x1,
+                  y1=end,
                   line=dict(
                       color=focus_colors[focus["Type"]][0],
                       width=3,
@@ -54,14 +60,15 @@ for index, focus in NSB.iterrows():
                   )
 
     fig.add_annotation(
-        x=(start + (end - start)/2).isoformat(),
-        y=2,
+        x=orig_x0,
+        y=(start + (end - start)/2).isoformat(),
         text=focus["Focus"],
         showarrow=False,
         arrowhead=1,
         yshift=0,
-        textangle=-90,
-        yanchor="bottom",
+        # textangle=-90,
+        # yanchor="bottom",
+        xanchor="left"
         )
 
 # real events
@@ -70,12 +77,13 @@ reals = pd.read_csv(r"C:\Users\Patryk\Desktop\Nowy folder\real_events.csv")
 for index, event in reals.iterrows():
     end_point= event["Date"]
     fig.add_annotation(
-        x=end_point,
-        y=1,
+        x=real_x0,
+        y=end_point,
         text=event["Event"],
         showarrow=False,
-        textangle=-90,
-        yanchor="top",
+        #textangle=-90,
+        #yanchor="top",
+        xanchor="left"
         )
     parents = event["Focuses"];
     if type(parents) is str:
@@ -86,10 +94,10 @@ for index, event in reals.iterrows():
             colors = event["Type"]
 
             fig.add_shape(type="line",
-                          x0=start_point,
-                          y0=2,
-                          x1=end_point,
-                          y1=1,
+                          x0=orig_x1,
+                          y0=start_point,
+                          x1=real_x0,
+                          y1=end_point,
                           line=dict(
                               color=focus_colors[event["Type"]][0],
                               width=4
