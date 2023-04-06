@@ -22,11 +22,16 @@ orig_x1=1
 real_x0=2
 
 fig = go.Figure()
-fig.update_xaxes(range=[-1, 3.5])
+fig.update_xaxes(
+    range=[-1, 3.5],
+    showgrid=False
+    )
+    
 fig.update_yaxes(
-                 range=[dt.date(1940,1,1), dt.date(1936,1,1)],
-                 type="date",
-                 #autorange="reversed"
+    range=[dt.date(1940,1,1), dt.date(1936,1,1)],
+    type="date",
+    #autorange="reversed",
+    showgrid=False
     )
 
 
@@ -40,7 +45,7 @@ focus_colors= {
 # NSB data
 NSB = pd.read_csv(r"C:\Users\Patryk\Desktop\Nowy folder\NSB_original.csv", encoding="utf-8")
 populate_dates('1936-01-01', NSB)
-
+        
 
 for index, focus in NSB.iterrows():
     start = NSB.at[index, "Start"]
@@ -57,34 +62,31 @@ for index, focus in NSB.iterrows():
                       width=3,
                       ),
                   fillcolor=focus_colors[focus["Type"]][1],
+                  layer="below"
                   )
-
-    fig.add_annotation(
-        x=orig_x0,
-        y=(start + (end - start)/2).isoformat(),
-        text=focus["Focus"],
-        showarrow=False,
-        arrowhead=1,
-        yshift=0,
-        # textangle=-90,
-        # yanchor="bottom",
-        xanchor="left"
-        )
+    fig.add_trace(go.Scatter(
+        y=[(start + (end - start)/2).isoformat()],
+        x=[orig_x0 + (orig_x1 - orig_x0)/2],
+        text=NSB.at[index, "Focus"],
+        mode="text",
+        hovertext=NSB.at[index, "Hovertext"],
+        #textposition="left",
+        showlegend=False
+                  ))
 
 # real events
 reals = pd.read_csv(r"C:\Users\Patryk\Desktop\Nowy folder\real_events.csv")
 
 for index, event in reals.iterrows():
     end_point= event["Date"]
-    fig.add_annotation(
-        x=real_x0,
-        y=end_point,
+    fig.add_trace(go.Scatter(
+        y=[end_point],
+        x=[real_x0],
         text=event["Event"],
-        showarrow=False,
-        #textangle=-90,
-        #yanchor="top",
-        xanchor="left"
-        )
+        mode="text",
+        hovertext=reals.at[index, "Hovertext"],
+        showlegend=False
+        ))
     parents = event["Focuses"];
     if type(parents) is str:
         for parent in parents.split(';'):
