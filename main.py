@@ -85,7 +85,8 @@ for index, event in reals.iterrows():
         text=event["Event"],
         mode="text",
         hovertext=reals.at[index, "Hovertext"],
-        showlegend=False
+        showlegend=False,
+        textposition="middle right",
         ))
     parents = event["Focuses"];
     if type(parents) is str:
